@@ -1,4 +1,4 @@
-class Api::User::SessionController < Api::ApplicationRecord
+class Api::User::SessionController < Api::ApplicationController
   skip_before_action :set_current_user_from_header, only: [:sign_up, :sign_in]
 
   def sign_up

@@ -1,4 +1,4 @@
-class Api::ApplicationRecord < ApplicationController
+class Api::ApplicationController < ApplicationController
   before_action :set_current_user_from_header
 
   # include DecodeJwtToken
