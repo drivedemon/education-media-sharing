@@ -34,6 +34,14 @@ class Api::User::SessionsController < Api::ApplicationController
     end
   end
 
+  def sign_in
+    user = User.authenticate(params[:email], params[:password])
+
+    render json: user.attributes, status: :ok
+  rescue => e
+    render json: e, status: :bad_request
+  end
+
   def activate
     if @user = User.load_from_activation_token(params[:id])
       @user.activate!
