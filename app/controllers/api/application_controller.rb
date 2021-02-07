@@ -1,7 +1,7 @@
 class Api::ApplicationRecord < ApplicationController
   before_action :set_current_user_from_header
 
-  include DecodeJwtToken
+  # include DecodeJwtToken
 
   def set_current_user_from_header
     auth_header = request.headers["auth-token"]
