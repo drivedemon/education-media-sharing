@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
-  devise_scope :user do
-    authenticated :user do
-      # root 'homepages#index', as: :authenticated_root
-      root 'welcome#index'
+  namespace :api do
+    namespace :user do
+      post :sign_up, to: "sessions#sign_up"
+      post :social_sign_up, to: "sessions#social_sign_up"
+      get :activate, param: :id, to: "sessions#activate"
     end
-
-    # unauthenticated do
-    #   root 'devise/sessions#new', as: :unauthenticated_root
-    # end
   end
 end

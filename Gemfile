@@ -26,8 +26,8 @@ gem 'redis', '~> 4.0'
 gem 'rack-cors'
 
 # require gem
-gem 'devise'
-gem "jwt"
+gem 'sorcery'
+gem 'jwt'
 gem 'acts_as_paranoid'
 gem 'sidekiq'
 

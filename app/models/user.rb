@@ -1,11 +1,14 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :authentications, dependent: :destroy
 
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
-  end
+  authenticates_with_sorcery!
+
+  validates :password, length: { minimum: 8 },
+                       if: -> { new_record? || changes[:crypted_password] }
+  validates :password, confirmation: true,
+                       if: -> { new_record? || changes[:crypted_password] }
+  validates :password_confirmation, presence: true,
+                                    if: -> { new_record? || changes[:crypted_password] }
+  validates_uniqueness_of :email, case_sensitive: true
 end
