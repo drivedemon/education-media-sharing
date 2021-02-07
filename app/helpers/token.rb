@@ -1,6 +1,5 @@
 module Token
-  include ActiveModel::Model
-
+  
   EXP = (24 * 3 * 3600)
   ALGO = 'HS512'.freeze
   SECRET = ENV['SECRET_KEY_BASE']
