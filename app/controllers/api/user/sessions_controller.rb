@@ -1,5 +1,5 @@
 class Api::User::SessionsController < Api::ApplicationController
-  skip_before_action :require_login, only: [:sign_up, :social_sign_up, :sign_in, :activate]
+  skip_before_action :set_user_from_token, only: [:sign_up, :social_sign_up, :sign_in, :activate]
 
   def sign_up
     user = User.new(
@@ -34,9 +34,16 @@ class Api::User::SessionsController < Api::ApplicationController
   def sign_in
     user = User.authenticate(params[:email], params[:password])
 
-    render json: user.attributes, status: :ok
-  rescue => e
-    render json: e, status: :bad_request
+    if user
+
+      render json: user.attributes.merge({ token: Token.build_from_user(user) }), status: :ok
+    else
+      render json: "Invalid email or password!", status: :bad_request
+    end
+  end
+
+  def me
+    render json: current_user.attributes, status: :ok
   end
 
   def activate
@@ -54,8 +61,8 @@ class Api::User::SessionsController < Api::ApplicationController
     params.permit(
       :first_name,
       :last_name,
-      :email,
       :username,
+      :email,
       :confirmation_email,
       :password,
       :confirmation_password,

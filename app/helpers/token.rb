@@ -1,15 +1,15 @@
 module Token
-  
+
   EXP = (24 * 3 * 3600)
   ALGO = 'HS512'.freeze
-  SECRET = ENV['SECRET_KEY_BASE']
+  SECRET = Rails.application.credentials.dig(:secret_key_base)
 
   attr_accessor :message, :token
 
   def self.build_from_user(user)
     payload = { user_id: user.id, exp: (Time.now.to_i + EXP) }
     token = JWT.encode payload, SECRET, ALGO
-    new(token: token)
+    token
   end
 
   def self.check_invalid_token(token)
