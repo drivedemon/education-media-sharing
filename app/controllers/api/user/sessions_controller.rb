@@ -9,14 +9,12 @@ class Api::User::SessionsController < Api::ApplicationController
     )
     user.save
 
-    user.create_profile(
-      first_name: sign_up_params[:first_name],
-      last_name: sign_up_params[:last_name],
-    )
-    AuthMailer.activation_needed_email(user.id).deliver_later
+    user.create_profile(sign_up_params.except(:email, :password, :confirmation_password, :confirmation_email))
+    AuthMailer.activation_needed_email(user_id: user.id).deliver_later
+
     render json: user.attributes, status: :ok
-  rescue
-    render json: user.errors, status: :bad_request
+  rescue => e
+    render json: e, status: :bad_request
   end
 
   def social_sign_up
@@ -60,7 +58,17 @@ class Api::User::SessionsController < Api::ApplicationController
       :username,
       :confirmation_email,
       :password,
-      :confirmation_password
+      :confirmation_password,
+      :street_line1,
+      :street_line2,
+      :sub_district,
+      :district,
+      :province,
+      :postcode,
+      :professional,
+      :educational,
+      :work_place,
+      :national_id,
     )
   end
 

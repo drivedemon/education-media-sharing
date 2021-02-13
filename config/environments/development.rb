@@ -4,11 +4,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :port           => '587',
-    :address        => 'smtp.mailgun.org',
-    :user_name      => 'postmaster@sandboxe4bdcc070c0c477fb966b30cbc6214e8.mailgun.org',
-    :password       => '27953e0d512a21a67d16dc4baf1e228b-4de08e90-f3e7fa58',
-    :domain         => 'sandboxe4bdcc070c0c477fb966b30cbc6214e8.mailgun.org',
+    :port           => Rails.application.credentials.dig(:email_config, :port),
+    :address           => Rails.application.credentials.dig(:email_config, :address),
+    :user_name           => Rails.application.credentials.dig(:email_config, :username),
+    :password           => Rails.application.credentials.dig(:email_config, :passowrd),
+    :domain           => Rails.application.credentials.dig(:email_config, :doamin),
     :authentication => :plain,
   }
   config.action_mailer.default_options = { from: "no-reply@education.no" }

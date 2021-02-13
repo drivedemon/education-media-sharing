@@ -1,11 +1,11 @@
 class AuthMailer < ApplicationMailer
-  def activation_needed_email(user_id)
+  def activation_needed_email(user_id:)
     @user = User.find(user_id)
-    @url = "https://education-media-sharing.herokuapp.com/api/user/activate?id=#{@user.activation_token}"
+    @url = "#{Rails.application.credentials.dig(:base_url)}/api/user/activate?id=#{@user.activation_token}"
     mail(to: @user.email, subject: 'Education Media Sharing - Email Confirmation')
   end
 
-  def activation_success_email(user_id)
+  def activation_success_email(user_id:)
     @user = User.find(user_id)
     mail(to: @user.email, subject: 'Education Media Sharing - Your account is now activated')
   end
