@@ -10,10 +10,10 @@ class Api::User::SessionsController < Api::ApplicationController
     user.save
 
     user.profile.create(
-      user: user,
       first_name: sign_up_params[:first_name],
       last_name: sign_up_params[:last_name],
     )
+    puts "email-ja: #{ENV['MAILGUN_SMTP_SERVER']}"
     AuthMailer.activation_needed_email(user.id).deliver_later
     render json: user.attributes, status: :ok
   rescue
