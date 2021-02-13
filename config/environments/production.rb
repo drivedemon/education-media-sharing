@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  # config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -8,9 +8,10 @@ Rails.application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'education-media-sharing.herokuapp.com',
+    :domain         => ENV['MAILGUN_DOMAIN'],
     :authentication => :plain,
   }
+  config.action_mailer.default_options = { from: "no-reply@education.no" }
 
   # Code is not reloaded between requests.
   config.cache_classes = true

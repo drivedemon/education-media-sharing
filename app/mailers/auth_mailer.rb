@@ -1,7 +1,7 @@
 class AuthMailer < ApplicationMailer
   def activation_needed_email(user_id)
     @user = User.find(user_id)
-    @url = "http://localhost:3000/api/user/activate?id=#{@user.activation_token}"
+    @url = "https://education-media-sharing.herokuapp.com/api/user/activate?id=#{@user.activation_token}"
     mail(to: @user.email, subject: 'Education Media Sharing - Email Confirmation')
   end
 

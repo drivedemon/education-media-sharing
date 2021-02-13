@@ -1,15 +1,15 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  # config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => 'c75dccf47f8abd',
-    :password => 'da37d0dc513124',
-    :address => 'smtp.mailtrap.io',
-    :domain => 'smtp.mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+    :port           => '587',
+    :address        => 'smtp.mailgun.org',
+    :user_name      => 'postmaster@sandboxe4bdcc070c0c477fb966b30cbc6214e8.mailgun.org',
+    :password       => '27953e0d512a21a67d16dc4baf1e228b-4de08e90-f3e7fa58',
+    :domain         => 'sandboxe4bdcc070c0c477fb966b30cbc6214e8.mailgun.org',
+    :authentication => :plain,
   }
   config.action_mailer.default_options = { from: "no-reply@education.no" }
 
