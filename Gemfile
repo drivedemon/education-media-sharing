@@ -29,7 +29,7 @@ gem 'rack-cors'
 gem 'sorcery'
 gem 'jwt'
 gem 'acts_as_paranoid'
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.2.8'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
