@@ -1,7 +1,7 @@
 class AuthMailer < ApplicationMailer
   def activation_needed_email(user_id:)
     @user = User.find(user_id)
-    @url = "#{Rails.application.credentials.dig(:base_url)}/api/user/activate?id=#{@user.activation_token}"
+    @url = "#{ENV['BASE_URL']}/api/user/activate?id=#{@user.activation_token}"
     mail(to: @user.email, subject: 'Education Media Sharing - Email Confirmation')
   end
 

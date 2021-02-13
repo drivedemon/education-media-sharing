@@ -1,5 +1,5 @@
 class Api::User::SessionsController < Api::ApplicationController
-  skip_before_action :set_user_from_token, only: [:sign_up, :social_sign_up, :sign_in, :activate]
+  skip_before_action :set_user_from_token, only: [:sign_up, :social_sign_up, :sign_in, :activate, :delete]
 
   def sign_up
     user = User.new(
@@ -27,7 +27,7 @@ class Api::User::SessionsController < Api::ApplicationController
 
       render json: user.attributes, status: :ok
     else
-      render json: user.errors, status: :bad_request
+      raise BadError.new(user.errors)
     end
   end
 
@@ -35,10 +35,9 @@ class Api::User::SessionsController < Api::ApplicationController
     user = User.authenticate(params[:email], params[:password])
 
     if user
-
       render json: user.attributes.merge({ token: Token.build_from_user(user) }), status: :ok
     else
-      render json: "Invalid email or password!", status: :bad_request
+      raise BadError.new("Invalid email or password!")
     end
   end
 
@@ -46,10 +45,20 @@ class Api::User::SessionsController < Api::ApplicationController
     render json: current_user.attributes, status: :ok
   end
 
+  def delete
+    user = User.find(params[:id])
+
+    if user.destroy
+      render json: "Deleted!", status: :ok
+    else
+      raise BadError.new("Invalid email or password!")
+    end
+  end
+
   def activate
     if @user = User.load_from_activation_token(params[:id])
       @user.activate!
-      render json: 'User was successfully activated.', status: :ok
+      render json: "User was successfully activated", status: :ok
     else
       not_authenticated
     end

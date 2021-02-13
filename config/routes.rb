@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :user do
+      delete "delete/:id", to: "sessions#delete"
       get :activate, param: :id, to: "sessions#activate"
       get :me, to: "sessions#me"
       post :sign_in, to: "sessions#sign_in"
