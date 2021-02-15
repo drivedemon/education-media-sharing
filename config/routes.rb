@@ -7,6 +7,11 @@ Rails.application.routes.draw do
       post :sign_in, to: "sessions#sign_in"
       post :sign_up, to: "sessions#sign_up"
       post :social_sign_up, to: "sessions#social_sign_up"
+
+      get 'oauth/callback', to: 'oauths#callback'
+      get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider
     end
   end
+
+  root 'welcome#index'
 end

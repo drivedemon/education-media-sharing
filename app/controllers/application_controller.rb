@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
   def set_user_from_token
     user = Token.get_user_from_request(request)
-    not_authenticated unless user
+    return unless user
     auto_login(user)
   end
 

@@ -10,8 +10,9 @@ Rails.application.configure do
     :password           => Rails.application.credentials.dig(:email_config, :passowrd),
     :domain           => Rails.application.credentials.dig(:email_config, :doamin),
     :authentication => :plain,
+    :enable_starttls_auto => true
   }
-  config.action_mailer.default_options = { from: "no-reply@education.no" }
+  config.action_mailer.default_options = { from: "no-reply@education.com <no-reply@education.com>" }
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

@@ -5,7 +5,7 @@ class Api::User::SessionsController < Api::ApplicationController
     user = User.new(
       email: sign_up_params[:email],
       password: sign_up_params[:password],
-      password_confirmation: sign_up_params[:password],
+      password_confirmation: sign_up_params[:confirmation_password],
     )
     user.save
 
@@ -43,6 +43,8 @@ class Api::User::SessionsController < Api::ApplicationController
 
   def me
     render json: current_user.attributes, status: :ok
+  rescue => e
+    raise BadError.new(e)
   end
 
   def delete
