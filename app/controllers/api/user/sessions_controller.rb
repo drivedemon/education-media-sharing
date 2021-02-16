@@ -60,7 +60,7 @@ class Api::User::SessionsController < Api::ApplicationController
   def activate
     if @user = User.load_from_activation_token(params[:id])
       @user.activate!
-      render json: "User was successfully activated", status: :ok
+      redirect_to "https://education-media.vercel.app/login"
     else
       not_authenticated
     end

@@ -12,7 +12,7 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
-  config.action_mailer.default_options = { from: "no-reply@education.no" }
+  config.action_mailer.default_options = { from: "no-reply@education.no <no-reply@education.com>" }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
