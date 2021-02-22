@@ -29,6 +29,7 @@ gem 'rack-cors'
 gem 'sorcery'
 gem 'jwt'
 gem 'acts_as_paranoid'
+gem 'money-rails' # https://github.com/RubyMoney/money-rails
 gem 'sidekiq', '~> 5.2.8'
 
 # Use Active Storage variant

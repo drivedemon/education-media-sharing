@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-
   has_one :profile, dependent: :destroy
+  has_many :contents, dependent: :destroy
   has_many :authentications, dependent: :destroy
 
   authenticates_with_sorcery!

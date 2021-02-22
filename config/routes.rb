@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get 'oauth/callback', to: 'oauths#callback'
       get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider
     end
+
+    resources :contents
   end
 
   root 'welcome#index'

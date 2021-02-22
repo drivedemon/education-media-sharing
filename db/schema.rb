@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_134738) do
+ActiveRecord::Schema.define(version: 2021_02_22_090831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,47 @@ ActiveRecord::Schema.define(version: 2021_02_07_134738) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "contents", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.text "description"
+    t.integer "amount"
+    t.bigint "category_id", null: false
+    t.bigint "media_type_id", null: false
+    t.bigint "media_sub_type_id", null: false
+    t.integer "level"
+    t.integer "resource"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_contents_on_category_id"
+    t.index ["media_sub_type_id"], name: "index_contents_on_media_sub_type_id"
+    t.index ["media_type_id"], name: "index_contents_on_media_type_id"
+    t.index ["user_id"], name: "index_contents_on_user_id"
+  end
+
+  create_table "media_sub_types", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_media_sub_types_on_category_id"
+  end
+
+  create_table "media_types", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_media_types_on_category_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -90,5 +131,11 @@ ActiveRecord::Schema.define(version: 2021_02_07_134738) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contents", "categories"
+  add_foreign_key "contents", "media_sub_types"
+  add_foreign_key "contents", "media_types"
+  add_foreign_key "contents", "users"
+  add_foreign_key "media_sub_types", "categories"
+  add_foreign_key "media_types", "categories"
   add_foreign_key "profiles", "users"
 end

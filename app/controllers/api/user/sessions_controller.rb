@@ -14,7 +14,7 @@ class Api::User::SessionsController < Api::ApplicationController
 
     render json: user.attributes, status: :ok
   rescue => e
-    render json: e, status: :bad_request
+    raise BadError.new(e)
   end
 
   def social_sign_up
