@@ -2,7 +2,7 @@ module Token
 
   EXP = (24 * 3 * 3600)
   ALGO = 'HS512'.freeze
-  SECRET = Rails.application.credentials.dig(:secret_key_base)
+  SECRET = Rails.application.credentials.dig(:secret_key_base) || ENV['SECRET_KEY_BASE']
 
   attr_accessor :message, :token
 
