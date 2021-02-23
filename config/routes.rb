@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  default_url_options :host => "localhost", port: 3000
+  default_url_options :host => ENV["BASE_URL"] || "localhost", port: 3000
 
   namespace :api do
     namespace :user do
