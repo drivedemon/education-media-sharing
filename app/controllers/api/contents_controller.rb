@@ -1,5 +1,5 @@
 class Api::ContentsController < Api::ApplicationController
-  skip_before_action :set_user_from_token
+  skip_before_action :set_user_from_token, except: :create
 
   include FilterQuery
 
@@ -7,7 +7,7 @@ class Api::ContentsController < Api::ApplicationController
     contents = Content.joins(:category, :media_type, :media_sub_type, :user => :profile).all
     contents = filter_query(collections: contents, query: permitted_filter_params)
     contents = contents&.map(&:content_format)
-    
+
     render json: contents, status: :ok
   end
 
