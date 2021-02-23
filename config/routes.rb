@@ -15,9 +15,11 @@ Rails.application.routes.draw do
     end
 
     namespace :list do
-      resources :categories
-      resources :media_types
-      resources :media_sub_types
+      resources :categories, only: :index
+      resources :levels, only: :index
+      resources :media_sub_types, only: :index
+      resources :media_types, only: :index
+      resources :resources, only: :index
     end
 
     resources :contents

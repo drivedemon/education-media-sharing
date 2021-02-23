@@ -1,7 +1,10 @@
 class Api::ContentsController < Api::ApplicationController
-
+  include FilterQuery
+  
   def index
-    contents = Content.all.map(&:content_format)
+    contents = Content.joins(:category, :media_type, :media_sub_type).all
+    contents = filter_query(contents)
+    contents = contents&.map(&:content_format)
     render json: contents, status: :ok
   end
 
@@ -16,6 +19,15 @@ class Api::ContentsController < Api::ApplicationController
   end
 
   private
+
+  def permitted_filter_params
+    params.permit(
+      :media_type,
+      :media_sub_type,
+      :level,
+      :resource,
+    )
+  end
 
   def create_content_params
     init_params = params.permit(
