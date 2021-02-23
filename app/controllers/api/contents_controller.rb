@@ -1,17 +1,18 @@
 class Api::ContentsController < Api::ApplicationController
 
   def index
-    contents = Content.first
-    # contents = Content.all.map(&:content_format)
-# binding.pry
+    contents = Content.all.map(&:content_format)
     render json: contents, status: :ok
   end
 
   def create
     content = Content.new(create_content_params)
-    content.save
-  rescue => e
-    raise BadError.new(e)
+
+    if content.save
+      render json: content.attributes, status: :ok
+    else
+      render json: content.errors, status: :bad_request
+    end
   end
 
   private

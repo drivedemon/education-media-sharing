@@ -14,7 +14,7 @@ class Api::User::SessionsController < Api::ApplicationController
 
     render json: user.attributes, status: :ok
   rescue => e
-    raise BadError.new(e)
+    render json: e, status: :bad_request
   end
 
   def social_sign_up
@@ -27,7 +27,7 @@ class Api::User::SessionsController < Api::ApplicationController
 
       render json: user.attributes, status: :ok
     else
-      raise BadError.new(user.errors)
+      render json: user.errors, status: :bad_request
     end
   end
 
@@ -37,14 +37,12 @@ class Api::User::SessionsController < Api::ApplicationController
     if user
       render json: user.attributes.merge({ token: Token.build_from_user(user) }), status: :ok
     else
-      raise BadError.new("Invalid email or password!")
+      render json: "Invalid email or password!", status: :bad_request
     end
   end
 
   def me
     render json: current_user.attributes, status: :ok
-  rescue => e
-    raise BadError.new(e)
   end
 
   def delete
@@ -53,7 +51,7 @@ class Api::User::SessionsController < Api::ApplicationController
     if user.destroy
       render json: "Deleted!", status: :ok
     else
-      raise BadError.new("Invalid email or password!")
+      render json: "Invalid email or password!", status: :bad_request
     end
   end
 

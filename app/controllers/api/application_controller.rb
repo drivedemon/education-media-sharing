@@ -4,6 +4,7 @@ class Api::ApplicationController < ApplicationController
   rescue_from JWT::VerificationError, with: :handle_401
   rescue_from JWT::ExpiredSignature, with: :handle_401
   rescue_from JWT::DecodeError, with: :handle_401
+  rescue_from ActiveModel::Errors, with: :handle_400
   rescue_from ActiveRecord::RecordNotFound, with: :handle_404
 
   def handle_400(exception)

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  default_url_options :host => "localhost", port: 3000
+
   namespace :api do
     namespace :user do
       delete "delete/:id", to: "sessions#delete"
@@ -10,6 +12,12 @@ Rails.application.routes.draw do
 
       get 'oauth/callback', to: 'oauths#callback'
       get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider
+    end
+
+    namespace :list do
+      resources :categories
+      resources :media_types
+      resources :media_sub_types
     end
 
     resources :contents

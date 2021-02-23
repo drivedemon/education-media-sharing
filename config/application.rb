@@ -17,6 +17,7 @@ module EducationMediaSharing
     # the framework and any gems in your application.
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
+    config.autoloader = :classic
     config.active_job.queue_adapter = :sidekiq
     config.api_only = true
 
