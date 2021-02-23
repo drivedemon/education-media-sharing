@@ -5,8 +5,8 @@ module FilterQuery
 
   private
 
-  def filter_query(collections)
-    permitted_filter_params.each do |key, value|
+  def filter_query(collections:, query:)
+    query.each do |key, value|
       next unless value.present?
       collections = collections.public_send("filter_by_#{key}", value)
     end

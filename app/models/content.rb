@@ -29,10 +29,14 @@ class Content < ApplicationRecord
   enum status: { pending: 1, approved: 2, rejected: 3 }, _prefix: true
 
   def content_format
-    slice(:id, :title, :description, :amount, :category, :level, :resource, :status).merge(
+    slice(:id, :title, :description, :amount, :level, :resource, :status).merge(
       {
-        title_covers: title_covers.to_a.map{|title_cover| {cover_path: url_for(title_cover)}},
-        content_file: content_file.present? ? url_for(content_file) : nil
+        category: category&.name,
+        media_type: media_type&.name,
+        media_sub_type: media_sub_type&.name,
+        created_user: user&.profile&.profile_format,
+        content_file: url_for(content_file),
+        title_covers: title_covers.to_a.map{|title_cover| {cover_path: url_for(title_cover)}}
       }
     )
   end

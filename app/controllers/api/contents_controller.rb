@@ -1,10 +1,13 @@
 class Api::ContentsController < Api::ApplicationController
+  skip_before_action :set_user_from_token
+
   include FilterQuery
-  
+
   def index
-    contents = Content.joins(:category, :media_type, :media_sub_type).all
-    contents = filter_query(contents)
+    contents = Content.joins(:category, :media_type, :media_sub_type, :user => :profile).all
+    contents = filter_query(collections: contents, query: permitted_filter_params)
     contents = contents&.map(&:content_format)
+    
     render json: contents, status: :ok
   end
 
@@ -16,6 +19,12 @@ class Api::ContentsController < Api::ApplicationController
     else
       render json: content.errors, status: :bad_request
     end
+  end
+
+  def show
+    content = Content.find(params[:id])&.content_format
+
+    render json: content, status: :ok
   end
 
   private
