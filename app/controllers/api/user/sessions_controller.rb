@@ -58,9 +58,9 @@ class Api::User::SessionsController < Api::ApplicationController
   def activate
     if @user = User.load_from_activation_token(params[:id])
       @user.activate!
-      redirect_to "https://education-media.vercel.app/login"
+      redirect_to "https://education-media.vercel.app/login?success=true"
     else
-      not_authenticated
+      render json: "Invalid token!", status: :bad_request
     end
   end
 
