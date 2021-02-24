@@ -31,7 +31,7 @@ gem 'jwt'
 gem 'acts_as_paranoid'
 gem 'money-rails' # https://github.com/RubyMoney/money-rails
 gem 'sidekiq', '~> 5.2.8'
-gem 'aws-sdk-s3', '~> 1'
+gem 'aws-sdk-s3', '~> 1', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -13,7 +13,7 @@ class Api::ContentsController < Api::ApplicationController
 
   def create
     content = Content.new(create_content_params)
-
+    
     if content.save
       render json: content.attributes, status: :ok
     else

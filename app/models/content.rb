@@ -35,8 +35,8 @@ class Content < ApplicationRecord
         media_type: media_type&.name,
         media_sub_type: media_sub_type&.name,
         created_user: user&.profile&.profile_format,
-        content_file: url_for(content_file),
-        title_covers: title_covers.to_a.map{|title_cover| {cover_path: url_for(title_cover)}}
+        content_file: content_file.service_url,
+        title_covers: title_covers.to_a.map{|title_cover| {cover_path: title_cover.service_url}}
       }
     )
   end
