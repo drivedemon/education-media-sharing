@@ -10,6 +10,7 @@ module EducationMediaSharing
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+    config.autoloader = :classic
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -17,7 +18,6 @@ module EducationMediaSharing
     # the framework and any gems in your application.
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
-    config.autoloader = :classic
     config.active_job.queue_adapter = :sidekiq
     config.api_only = true
 

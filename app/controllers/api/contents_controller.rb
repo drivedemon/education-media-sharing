@@ -51,7 +51,6 @@ class Api::ContentsController < Api::ApplicationController
       :content_file,
       :title_covers => [],
     )
-    
     init_params.merge(
       {
         user_id: current_user&.id,
